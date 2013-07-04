@@ -2,16 +2,29 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+  config.omnibus.chef_version = :latest
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  config.vm.box = "opscode-ubuntu-12.04"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://domain.com/path/to/above.box"
+  config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04-i386.box"
+  
+  config.vm.provision :chef_client do |chef|
+  chef.chef_server_url = "https://api.opscode.com/organizations/rapid"
+  chef.validation_key_path = "/Users/williamhollandsworth/book/chef-repo/.chef/rapid-validator.pem"
+  chef.validation_client_name = "rapid-validator"
+  chef.node_name = "rapid_vm"
+
+
+  #Vagrant.configure("2") do |config|
+  # config.omnibus.chef_version = :latest
+  # end
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -75,14 +88,11 @@ Vagrant.configure("2") do |config|
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
   #
-  # config.vm.provision :chef_solo do |chef|
-  #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
-  #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
-  #   chef.add_role "web"
-  #
-  #   # You may also specify custom JSON attributes:
+  #config.vm.provision :chef_client do |chef|
+  #chef.chef_server_url = "https://api.opscode.com/organizations/rapid"
+  #valadation_key "./.chef/rapid-validator.pem"
+  #chef.valadation_client_name = "rapid-validator"
+
   #   chef.json = { :mysql_password => "foo" }
   # end
 
@@ -97,15 +107,20 @@ Vagrant.configure("2") do |config|
   # validation key to validation.pem.
   #
   # config.vm.provision :chef_client do |chef|
-  #   chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
-  #   chef.validation_key_path = "ORGNAME-validator.pem"
+  #   chef.chef_server_url = "https://api.opscode.com/organizations/rapid"
+  #   chef.validation_key_path = "/Users/williamhollandsworth/book/chef-repo/.chef/rapid-validator.pem"
+  # Vagrant.configure("2") do |config|
+  #   config.omnibus.chef_version = :latest
+  #   print "hello"
   # end
-  #
   # If you're using the Opscode platform, your validator client is
   # ORGNAME-validator, replacing ORGNAME with your organization name.
   #
   # If you have your own Chef Server, the default validation client name is
   # chef-validator, unless you changed the configuration.
   #
-  #   chef.validation_client_name = "ORGNAME-validator"
+  # validation_client_name = "rapid-validator"
+
+ end
+
 end
