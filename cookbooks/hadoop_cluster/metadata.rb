@@ -12,7 +12,7 @@ depends          "runit"
 depends          "volumes"
 depends          "tuning"
 depends          "metachef"
-depends          "dashpot"
+#depends          "dashpot"
 
 recipe           "hadoop_cluster::default",            "Base configuration for hadoop_cluster"
 recipe           "hadoop_cluster::add_cloudera_repo",  "Add Cloudera repo to package manager"
