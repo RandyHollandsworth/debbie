@@ -11,6 +11,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "opscode-ubuntu-12.04"
 
+
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04-i386.box"
@@ -21,6 +22,10 @@ Vagrant.configure("2") do |config|
   chef.validation_client_name = "rapid-validator"
   chef.node_name = "rapid_vm"
 
+Vagrant::Config.run do |config|
+  # ...
+  config.vm.forward_port 80, 8080
+end
 
   #Vagrant.configure("2") do |config|
   # config.omnibus.chef_version = :latest
