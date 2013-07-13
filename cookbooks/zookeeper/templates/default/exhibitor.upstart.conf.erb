@@ -1,0 +1,13 @@
+#!upstart
+description "Exhibitor Server"
+
+env USER=<%= @user %>
+
+start on startup
+stop on shutdown
+
+respawn
+
+exec sudo -u $USER sh -c "java -jar \
+    <%= @jar %> \
+    <%= @opts.keys.sort.map { |k| "--#{k.to_s} #{@opts[k]}" }.join(" ") %>"
